@@ -25,7 +25,7 @@ jobs:
       run: |
         timoni mod push ./modules/cron \
           oci://docker.io/anthonymbrice/cron \
-          --version ${{ github.ref_name }}
+          --version ${{ github.ref_name }} \
           --latest \
           -a 'org.opencontainers.image.licenses=Apache-2.0' \
           -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \

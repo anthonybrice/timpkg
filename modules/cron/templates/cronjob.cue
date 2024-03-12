@@ -27,7 +27,10 @@ import (
 						imagePullPolicy: #config.image.pullPolicy
 						command: #job.command
 						args?: #job.args
-						env: #config.env
+						env: [for #k, #v in #config.env {
+							name: #k
+							value: #v
+						}]
 					}]
 					restartPolicy: "OnFailure"
 				}

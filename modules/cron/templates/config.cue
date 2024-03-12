@@ -85,13 +85,13 @@ import (
 
 	timeZone: string
 
-	crontab: [{
+	crontab: [...{
 		schedule!: string
 		command!:  [string, ...]
-		args?:		 [string, ...]
-	}, ...]
+		args?:		 [...string]
+	}]
 
-	env: [ corev1.#EnvVar, ...]
+	env: { [string]: string }
 }
 
 // Instance takes the config values and outputs sthe Kubernetes objects.

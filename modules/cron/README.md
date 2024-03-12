@@ -44,11 +44,11 @@ timoni -n default delete cron
 ```
 timeZone: string
 
-crontab: [{
+crontab: [...{
 	schedule!: string
 	command!:  [string, ...]
-	args?:		 [string, ...]
-}, ...]
+	args?:		 [...string]
+}]
 
-env: [ corev1.#EnvVar, ...]
+env: { [string]: string }
 ```

@@ -11,10 +11,6 @@ jobs:
   push:
     runs-on: ubuntu-latest
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
     - name: Checkout
       uses: actions/checkout@v4.1.1
     - name: Setup Timoni
@@ -37,6 +33,6 @@ jobs:
     - name: Pull
       run: |
         mkdir -p /tmp/cron
-        timoni mod pull oci://docker.io/anthonymbrice/cron \
+        timoni mod pull oci://anthonymbrice/cron \
           --version ${{ github.ref_name }} \
           --output /tmp/cron

@@ -1,4 +1,4 @@
-name: Publish on commit
+name: Publish on tag
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push
       run: |
-        timoni mod push ./cron \
+        timoni mod push ./modules/cron \
           oci://docker.io/anthonymbrice/cron \
           --version ${{ github.ref_name }}
           --latest \

@@ -7,7 +7,7 @@ A [timoni.sh](http://timoni.sh) module for deploying hedgedoc to Kubernetes clus
 To create an instance using the default values:
 
 ```shell
-timoni -n default apply hedgedoc oci://<container-registry-url>
+timoni -n default apply hedgedoc oci://ghcr.io/anthonybrice/modules/hedgedoc
 ```
 
 To change the [default configuration](#configuration),
@@ -27,7 +27,7 @@ values: {
 And apply the values with:
 
 ```shell
-timoni -n default apply hedgedoc oci://<container-registry-url> \
+timoni -n default apply hedgedoc oci://ghcr.io/anthonybrice/modules/hedgedoc \
 --values ./my-values.cue
 ```
 

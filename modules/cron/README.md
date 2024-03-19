@@ -7,7 +7,7 @@ A [timoni.sh](http://timoni.sh) module for deploying cron to Kubernetes clusters
 To create an instance using the default values:
 
 ```shell
-timoni -n default apply cron oci://<container-registry-url>
+timoni -n default apply cron oci://ghcr.io/anthonybrice/modules/cron
 ```
 
 To change the [default configuration](#configuration),
@@ -27,7 +27,7 @@ values: {
 And apply the values with:
 
 ```shell
-timoni -n default apply cron oci://<container-registry-url> \
+timoni -n default apply cron oci://ghcr.io/anthonybrice/modules/cron \
 --values ./my-values.cue
 ```
 

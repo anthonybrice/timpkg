@@ -17,8 +17,8 @@ import (
 		selector: #config.selector.labels
 		ports: [
 			{
-				port:       #config.service.port
-				protocol:   "TCP"
+				port:       34197
+				protocol:   "UDP"
 				name:       "http"
 				targetPort: name
 			},

@@ -1,1 +1,1 @@
-module: "timoni.sh/podinfo"
+module: "timoni.sh/factorio"

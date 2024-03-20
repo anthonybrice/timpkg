@@ -5,7 +5,7 @@
 package main
 
 import (
-	templates "timoni.sh/hedgedoc/templates"
+	templates "timoni.sh/factorio/templates"
 )
 
 // Define the schema for the user-supplied values.

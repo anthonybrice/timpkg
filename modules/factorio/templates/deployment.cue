@@ -27,16 +27,16 @@ import (
 						name:            #config.metadata.name
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
-						env: [...corev1.#EnvVar] & [for #k, #v in #config.env {
-							name:  #k
-							value: #v
+						env: [...corev1.#EnvVar] & [for k, v in #config.env {
+							name:  k
+							value: v
 						}]
 						ports: [
 							{
-								name:          "http"
-								containerPort: #config.env.COM_PORT | 3000
-								protocol:      "TCP"
-							},
+								name: "http"
+								containerPort: 34197
+								protocol: "UDP"
+							}
 						]
 						readinessProbe: {
 							httpGet: {

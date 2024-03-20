@@ -17,7 +17,7 @@ import (
 				namespace: #config.metadata.namespace
 			}
 			spec: batchv1.#CronJobSpec & {
-				timeZone: #config.timeZone
+				timeZone: #config.timezone
 				schedule: #job.schedule
 				jobTemplate: spec: template: spec: {
 					serviceAccountName: #config.metadata.name

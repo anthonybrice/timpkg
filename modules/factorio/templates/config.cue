@@ -39,7 +39,7 @@ import (
 	// The image allows setting the container image repository,
 	// tag, digest and pull policy.
 	image: timoniv1.#Image & {
-		repository: *"docker.io/factoriotools/factorio" | string
+		repository: *"ghcr.io/anthonybrice/factorio" | string
 		tag:        *"latest" | string
 		digest:     *"" | string
 	}
@@ -67,7 +67,7 @@ import (
 	resources: timoniv1.#ResourceRequirements & {
 		requests: {
 			cpu:    *"1000m" | timoniv1.#CPUQuantity
-			memory: *"4Gi" | timoniv1.#MemoryQuantity
+			memory: *"2Gi" | timoniv1.#MemoryQuantity
 		}
 	}
 
@@ -92,7 +92,7 @@ import (
 	service: {
 		annotations?: timoniv1.#Annotations
 
-		port: *3000 | int & >0 & <=65535
+		port: *34197 | int & >0 & <=65535
 	}
 
 	env: {

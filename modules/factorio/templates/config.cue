@@ -94,10 +94,6 @@ import (
 
 		port: *34197 | int & >0 & <=65535
 	}
-
-	env: {
-		[string]: string
-	}
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.
@@ -107,6 +103,5 @@ import (
 	objects: {
 		dpy: #Deployment & {#config: config}
 		svc: #Service & {#config: config}
-		sa:	#ServiceAccount & {#config: config}
 	}
 }

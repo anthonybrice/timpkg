@@ -27,10 +27,6 @@ import (
 						name:            #config.metadata.name
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
-						env: [...corev1.#EnvVar] & [for k, v in #config.env {
-							name:  k
-							value: v
-						}]
 						ports: [
 							{
 								name: "http"

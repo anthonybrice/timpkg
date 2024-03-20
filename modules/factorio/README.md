@@ -7,7 +7,7 @@ A [timoni.sh](http://timoni.sh) module for deploying hedgedoc to Kubernetes clus
 To create an instance using the default values:
 
 ```shell
-timoni -n default apply hedgedoc oci://<container-registry-url>
+timoni -n default apply factorio oci://anthonybrice/modules/factorio
 ```
 
 To change the [default configuration](#configuration),
@@ -27,7 +27,7 @@ values: {
 And apply the values with:
 
 ```shell
-timoni -n default apply hedgedoc oci://<container-registry-url> \
+timoni -n default apply factorio oci://ghcr.io/anthonybrice/modules/factorio \
 --values ./my-values.cue
 ```
 
@@ -36,11 +36,9 @@ timoni -n default apply hedgedoc oci://<container-registry-url> \
 To uninstall an instance and delete all its Kubernetes resources:
 
 ```shell
-timoni -n default delete hedgedoc
+timoni -n default delete factorio
 ```
 
 ## Configuration
 
-| Key                      | Type                             | Default            | Description                                                                                                                                  |
-|--------------------------|----------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| `env:` | `{ [string]: string }` | `{}` | [Environment variables applied to the container](https://docs.hedgedoc.org/configuration/) |
+No factorio configuration. Runs the game with a new save file and exposes a service at port 34197.

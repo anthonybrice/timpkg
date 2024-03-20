@@ -1,6 +1,6 @@
-# hedgedoc
+# factorio
 
-A [timoni.sh](http://timoni.sh) module for deploying hedgedoc to Kubernetes clusters.
+A [timoni.sh](http://timoni.sh) module for deploying factorio to Kubernetes clusters.
 
 ## Install
 

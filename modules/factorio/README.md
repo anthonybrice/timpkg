@@ -7,7 +7,7 @@ A [timoni.sh](http://timoni.sh) module for deploying factorio to Kubernetes clus
 To create an instance using the default values:
 
 ```shell
-timoni -n default apply factorio oci://anthonybrice/modules/factorio
+timoni -n default apply factorio oci://ghcr.io/anthonybrice/modules/factorio
 ```
 
 To change the [default configuration](#configuration),

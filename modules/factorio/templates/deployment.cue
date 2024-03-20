@@ -38,21 +38,6 @@ import (
 								protocol: "UDP"
 							}
 						]
-						readinessProbe: {
-							httpGet: {
-								path: "/"
-								port: "http"
-							}
-							initialDelaySeconds: 5
-							periodSeconds:       10
-						}
-						livenessProbe: {
-							tcpSocket: {
-								port: "http"
-							}
-							initialDelaySeconds: 5
-							periodSeconds:       5
-						}
 						if #config.resources != _|_ {
 							resources: #config.resources
 						}

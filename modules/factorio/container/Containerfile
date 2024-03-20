@@ -1,0 +1,14 @@
+FROM archlinux:latest
+
+RUN pacman -Sy xz sudo --noconfirm
+
+COPY root/ /
+
+RUN tar -xJf /tmp/factorio*.tar.xz -C /opt \
+    && useradd factorio \
+    && chown -R factorio:factorio /opt/factorio \
+    && sudo -u factorio /opt/factorio/bin/x64/factorio --create /opt/factorio/saves/newgame.zip
+
+RUN pacman -Scc --noconfirm
+
+CMD ["sudo", "-u", "factorio", "/opt/factorio/bin/x64/factorio", "--start-server", "/opt/factorio/saves/newgame.zip"]

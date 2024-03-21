@@ -1,0 +1,9 @@
+FROM nginx:alpine
+
+COPY root/ /
+
+RUN apk add --no-cache unzip \
+  && unzip -o /tmp/tech-radar-master.zip \
+  && mv -f /tech-radar-master/docs/* /usr/share/nginx/html/
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -7,7 +7,7 @@ import (
 
 #Deployment: appsv1.#Deployment & {
 	#config:    #Config
-	#cmName:    string
+	#cmName: string
 	apiVersion: "apps/v1"
 	kind:       "Deployment"
 	metadata:   #config.metadata
@@ -28,9 +28,9 @@ import (
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
 						volumeMounts: [{
-							name:      "config-volume"
+							name: "config-volume"
 							mountPath: "/usr/share/nginx/html/config.json"
-							subPath:   "config.json"
+							subPath: "config.json"
 						}]
 						ports: [
 							{
@@ -48,9 +48,7 @@ import (
 							periodSeconds:       10
 						}
 						livenessProbe: {
-							tcpSocket: {
-								port: "http"
-							}
+							tcpSocket: port: "http"
 							initialDelaySeconds: 5
 							periodSeconds:       5
 						}

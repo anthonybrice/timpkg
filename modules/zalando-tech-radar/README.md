@@ -21,6 +21,15 @@ values: {
 		cpu:    "100m"
 		memory: "128Mi"
 	}
+
+	ztrConfig: entries: [{
+			quadrant: 1
+			ring:     0
+			label:    "Timoni"
+			active:   true
+			moved:    0
+		},
+	]
 }
 ```
 

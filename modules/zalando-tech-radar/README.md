@@ -1,6 +1,6 @@
 # zalando-tech-radar
 
-A [timoni.sh](http://timoni.sh) module for deploying zalando-tech-radar to Kubernetes clusters.
+A [timoni.sh](http://timoni.sh) module for deploying [Zalando's Tech Radar](https://github.com/zalando/tech-radar) to Kubernetes clusters.
 
 ## Install
 
@@ -22,14 +22,17 @@ values: {
 		memory: "128Mi"
 	}
 
-	ztrConfig: entries: [{
-			quadrant: 1
-			ring:     0
-			label:    "Timoni"
-			active:   true
-			moved:    0
-		},
-	]
+	ztrConfig: {
+		entries: [
+			{
+				quadrant: 1
+				ring:     0
+				label:    "Timoni"
+				active:   true
+				moved:    0
+			},
+		]
+	}
 }
 ```
 

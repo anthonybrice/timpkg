@@ -7,6 +7,7 @@ import (
 
 #Deployment: appsv1.#Deployment & {
 	#config:    #Config
+	#cmName:    string
 	apiVersion: "apps/v1"
 	kind:       "Deployment"
 	metadata:   #config.metadata
@@ -26,6 +27,11 @@ import (
 						name:            #config.metadata.name
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
+						volumeMounts: [{
+							name:      "config-volume"
+							mountPath: "/usr/share/nginx/html/config.json"
+							subPath:   "config.json"
+						}]
 						ports: [
 							{
 								name:          "http"
@@ -56,6 +62,12 @@ import (
 						}
 					},
 				]
+				volumes: [{
+					name: "config-volume"
+					configMap: {
+						name: #cmName
+					}
+				}]
 				if #config.pod.affinity != _|_ {
 					affinity: #config.pod.affinity
 				}

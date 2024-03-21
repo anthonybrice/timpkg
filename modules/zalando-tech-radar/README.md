@@ -57,7 +57,4 @@ timoni -n default delete zalando-tech-radar
 | `securityContext:`       | `corev1.#SecurityContext`        | `{}`               | [Kubernetes container security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context)                           |
 | `service: annotations:`  | `{[ string]: string}`            | `{}`               | Annotations applied to the Kubernetes Service                                                                                                |
 | `service: port:`         | `int`                            | `80`               | Kubernetes Service HTTP port                                                                                                                 |
-
-### Container Image
-
-The zip referenced in `Containerfile` is a zip of zalando's tech radar github repo. Download and place the file `container/root/tmp` to build the image.
+| `ztrConfig` | JSON | `{}` | [The`config.json` file that `index.html` fetches. ](https://github.com/zalando/tech-radar) See values.cue for an example.

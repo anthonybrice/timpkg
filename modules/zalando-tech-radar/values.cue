@@ -6,5 +6,37 @@
 package main
 
 // Placeholder for user-supplied values.
-values: {
+values: ztrConfig: {
+	title: "Your Organization's Official Tech Radar"
+	date:  "TODAY"
+	entries: [
+		{
+			quadrant: 0
+			ring:     0
+			label:    "Haskell"
+			active:   true
+			moved:    0
+		},
+		{
+			quadrant: 1
+			ring:     0
+			label:    "Haskell"
+			active:   true
+			moved:    0
+		},
+		{
+			quadrant: 2
+			ring:     0
+			label:    "Haskell"
+			active:   true
+			moved:    0
+		},
+		{
+			quadrant: 3
+			ring:     0
+			label:    "Haskell"
+			active:   true
+			moved:    0
+		},
+	]
 }

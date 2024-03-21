@@ -4,6 +4,10 @@ COPY root/ /
 
 RUN apk add --no-cache unzip \
   && unzip -o /tmp/tech-radar-master.zip \
-  && mv -f /tech-radar-master/docs/* /usr/share/nginx/html/
+  && mv -f /tech-radar-master/docs/* /usr/share/nginx/html/ \
+  && rm /usr/share/nginx/html/config.json \
+  && sed -i '34s/.*/    title: data.title,/' /usr/share/nginx/html/index.html \
+  && apk del unzip \
+  && rm /tmp/tech-radar-master.zip
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -94,6 +94,23 @@ import (
 
 		port: *80 | int & >0 & <=65535
 	}
+
+	ztrConfig: {
+		title: *"" | string
+
+		date: *"" | string
+
+		entries: [
+			...{
+				quadrant: int
+				ring:     int
+				label:    string
+				active:   bool
+				moved:    int
+			},
+		]
+
+	}
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.
@@ -101,7 +118,8 @@ import (
 	config: #Config
 
 	objects: {
-		deploy: #Deployment & {#config: config}
+		cm: #ConfigMap & {#config: config}
+		deploy: #Deployment & {#config: config, #cmName: cm.metadata.name}
 		service: #Service & {#config: config}
 	}
 }

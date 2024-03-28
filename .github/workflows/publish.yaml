@@ -1,4 +1,4 @@
-name: Publish on tag
+name: Run dagger on push
 
 on:
   push:

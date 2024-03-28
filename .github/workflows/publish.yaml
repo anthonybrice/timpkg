@@ -25,8 +25,6 @@ jobs:
         fi
 
     - name: Call dagger onPush
-      run: |
-        echo tags: $TAGS
       # cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
       # dagger call on-push --dir=. --commit-json=
       uses: dagger/dagger-for-github@v5

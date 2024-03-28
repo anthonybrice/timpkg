@@ -42,8 +42,8 @@ class Timpkg {
   }
 
   @func()
-  async onPush(dir: Directory): Promise<string> {
-    return `${dir}`
+  async onPush(dir: Directory, tags: string): Promise<string> {
+    return tags
   }
 
   @func()

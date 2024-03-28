@@ -25,6 +25,6 @@ jobs:
       with:
         version: "0.10.2"
         verb: call
-        module: github.com/shykes/daggerverse/hello@v0.1.2
-        args: hello
+        module: github.com/anthonybrice/timpkg
+        args: ["on-push", "--dir=.", "--commit-json=${{ steps.metadata.outputs.commit }}"]
         # args: node dagger/src/index.ts

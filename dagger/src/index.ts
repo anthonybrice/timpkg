@@ -46,4 +46,9 @@ class Timpkg {
     const json = JSON.parse(commitJson)
     return JSON.stringify(json)
   }
+
+  @func()
+  async fml(): Promise<string> {
+    return "fml"
+  }
 }

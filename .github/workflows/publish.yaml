@@ -18,8 +18,8 @@ jobs:
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
-        username: ${{ $GITHUB_ACTOR }}
-        password: ${{ secrets.GITHUB_SECRET }}
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GHCR_PASSWORD }}
 
     - name: Call dagger on-push
       uses: dagger/dagger-for-github@v5

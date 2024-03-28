@@ -2,48 +2,80 @@ name: Publish on tag
 
 on:
   push:
-    tags:
-    - "cron/*" # semver format
-    - "hedgedoc/*" # semver format
+    branches:
+      - master
 
 permissions:
   contents: read # needed for checkout
 
 jobs:
+  runDagger:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get commit metadata
+      id: metadata
+      run: |
+        echo "::set-output name=commit::$(jq -n --arg sha "${{ github.sha }}" --arg ref "${{ github.ref }}" --arg event "${{ github.event_name }}" '{sha: $sha, ref: $ref, event: $event}')"
+      shell: bash
+
+    - name: Call dagger onPush
+      uses: dagger/dagger-for-github@v5
+      with:
+        version: "0.10.2"
+        verb: call
+        module: dagger/
+        args: --dir=. 
+        # assumes the Dagger Cloud token is in
+        # a repository secret named DAGGER_CLOUD_TOKEN
+        # set via the GitHub UI/CLI
+        # cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+
   push_cron:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/cron/')
     outputs:
       version: ${{ steps.set_version.outputs.version }}
     steps:
-    - name: Checkout
+    -
+      name: Checkout
       uses: actions/checkout@v4
-    - name: Extract Version
+    -
+      name: Extract Version
       id: set_version
       run: echo "::set-output name=version::$(echo ${{ github.ref }} | cut -d '/' -f4)"
-    - name: Setup Timoni
-      uses: stefanprodan/timoni/actions/setup@main
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
+    -
+      name: Call Dagger Mod Push
+      uses: dagger/dagger-for-github@v5
       with:
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Push
-      run: |
-        timoni mod push ./modules/cron \
-          oci://docker.io/anthonymbrice/cron \
-          --version ${{ steps.set_version.outputs.version }} \
-          --latest \
-          -a 'org.opencontainers.image.licenses=Apache-2.0' \
-          -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \
-          -a 'org.opencontainers.image.description=A Timoni module for `cron`.'
-    - name: Pull
-      run: |
-        mkdir -p /tmp/cron
-        timoni mod pull oci://anthonymbrice/cron \
-          --version ${{ steps.set_version.outputs.version }} \
-          --output /tmp/cron
+        version: "0.10.2"
+        verb: call
+        module: github.com/anthonybrice/daggerverse/timoni
+        args: mod push ./modules/cron oci://ghcr.io/anthonymbrice/cron --version ${{ steps.set_version.outputs.version }} --latest=true
+    # - name: Setup Timoni
+    #   uses: stefanprodan/timoni/actions/setup@main
+    # - name: Login to Docker Hub
+    #   uses: docker/login-action@v3
+    #   with:
+    #     registry: docker.io
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    # - name: Push
+    #   run: |
+    #     timoni mod push ./modules/cron \
+    #       oci://docker.io/anthonymbrice/cron \
+    #       --version ${{ steps.set_version.outputs.version }} \
+    #       --latest \
+    #       -a 'org.opencontainers.image.licenses=Apache-2.0' \
+    #       -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \
+    #       -a 'org.opencontainers.image.description=A Timoni module for `cron`.'
+    # - name: Pull
+    #   run: |
+    #     mkdir -p /tmp/cron
+    #     timoni mod pull oci://anthonymbrice/cron \
+    #       --version ${{ steps.set_version.outputs.version }} \
+    #       --output /tmp/cron
 
   push_hedgedoc:
     runs-on: ubuntu-latest
@@ -51,31 +83,31 @@ jobs:
     outputs:
       version: ${{ steps.set_version.outputs.version }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Extract Version
-      id: set_version
-      run: echo "::set-output name=version::$(echo ${{ github.ref }} | cut -d '/' -f4)"
-    - name: Setup Timoni
-      uses: stefanprodan/timoni/actions/setup@main
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Push
-      run: |
-        timoni mod push ./modules/hedgedoc \
-          oci://docker.io/anthonymbrice/hedgedoc \
-          --version ${{ steps.set_version.outputs.version }} \
-          --latest \
-          -a 'org.opencontainers.image.licenses=Apache-2.0' \
-          -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \
-          -a 'org.opencontainers.image.description=A Timoni module for Hedgedoc.'
-    - name: Pull
-      run: |
-        mkdir -p /tmp/hedgedoc
-        timoni mod pull oci://anthonymbrice/hedgedoc \
-          --version ${{ steps.set_version.outputs.version }} \
-          --output /tmp/hedgedoc
+    # - name: Checkout
+    #   uses: actions/checkout@v4
+    # - name: Extract Version
+    #   id: set_version
+    #   run: echo "::set-output name=version::$(echo ${{ github.ref }} | cut -d '/' -f4)"
+    # - name: Setup Timoni
+    #   uses: stefanprodan/timoni/actions/setup@main
+    # - name: Login to Docker Hub
+    #   uses: docker/login-action@v3
+    #   with:
+    #     registry: docker.io
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    # - name: Push
+    #   run: |
+    #     timoni mod push ./modules/hedgedoc \
+    #       oci://docker.io/anthonymbrice/hedgedoc \
+    #       --version ${{ steps.set_version.outputs.version }} \
+    #       --latest \
+    #       -a 'org.opencontainers.image.licenses=Apache-2.0' \
+    #       -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \
+    #       -a 'org.opencontainers.image.description=A Timoni module for Hedgedoc.'
+    # - name: Pull
+    #   run: |
+    #     mkdir -p /tmp/hedgedoc
+    #     timoni mod pull oci://anthonymbrice/hedgedoc \
+    #       --version ${{ steps.set_version.outputs.version }} \
+    #       --output /tmp/hedgedoc

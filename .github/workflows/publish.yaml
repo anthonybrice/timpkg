@@ -24,12 +24,9 @@ jobs:
           echo "TAGS=$tags" >> $GITHUB_ENV
         fi
 
-    - name: Call dagger onPush
-      # cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
-      # dagger call on-push --dir=. --commit-json=
+    - name: Call dagger on-push
       uses: dagger/dagger-for-github@v5
       with:
         version: "0.10.2"
         verb: call
-        args: on-push --dir=. --tags=$TAGS
-        # args: node dagger/src/index.ts
+        args: on-push --dir=./modules

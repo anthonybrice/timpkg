@@ -49,7 +49,7 @@ class Timpkg {
       const current = maxSatisfying(vs, '*')
       const next = inc(current, "patch")
 
-      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`, `--creds=${token}`])
+      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`, `--creds=timoni:${token}`])
     }))
 
     return results.join("\n")

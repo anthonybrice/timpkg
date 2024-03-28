@@ -11,13 +11,19 @@ permissions:
 jobs:
   runDagger:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
     - uses: actions/checkout@v4
 
-    - name: Call dagger on-push  
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Call dagger on-push
       uses: dagger/dagger-for-github@v5
       with:
         version: "0.10.2"
         verb: call
-        args: on-push --dir=./modules --token=${{ secrets.GITHUB_TOKEN }}
+        args: on-push --dir=./modules

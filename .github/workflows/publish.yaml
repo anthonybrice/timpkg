@@ -21,10 +21,13 @@ jobs:
       shell: bash
 
     - name: Call dagger onPush
-      uses: dagger/dagger-for-github@v5
-      with:
-        version: "0.10.2"
-        verb: call
-        module: github.com/anthonybrice/timpkg@3ea4fac61cb0a744e9e279658b049e2c49d7257a
-        args: on-push --dir=. --commit-json=${{ steps.metadata.outputs.commit }}
-        # args: node dagger/src/index.ts
+      run: |
+        cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+        dagger call on-push --dir=. --commit-json=${{ steps.metadata.outputs.commit }}
+      # uses: dagger/dagger-for-github@v5
+      # with:
+      #   version: "0.10.2"
+      #   verb: call
+      #   module: github.com/anthonybrice/timpkg@3ea4fac61cb0a744e9e279658b049e2c49d7257a
+      #   args: on-push --dir=. --commit-json=${{ steps.metadata.outputs.commit }}
+      #   # args: node dagger/src/index.ts

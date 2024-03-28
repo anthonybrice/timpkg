@@ -42,9 +42,8 @@ class Timpkg {
   }
 
   @func()
-  async onPush(dir: Directory, commitJson: string): Promise<string> {
-    const json = JSON.parse(commitJson)
-    return JSON.stringify(json)
+  async onPush(dir: Directory): Promise<string> {
+    return `${dir}`
   }
 
   @func()

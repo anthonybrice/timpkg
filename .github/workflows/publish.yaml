@@ -26,4 +26,4 @@ jobs:
       with:
         version: "0.10.2"
         verb: call
-        args: on-push --dir=./modules
+        args: on-push --dir=./modules --token=${{ secrets.GITHUB_TOKEN }}

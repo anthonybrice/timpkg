@@ -32,7 +32,7 @@ class Timpkg {
   }
 
   @func()
-  async onPush(dir: Directory): Promise<string> {
+  async onPush(dir: Directory, token: string): Promise<string> {
     const modules = await dir.entries()
 
     const results = await Promise.all(modules.map(async m => {
@@ -49,7 +49,7 @@ class Timpkg {
       const current = maxSatisfying(vs, '*')
       const next = inc(current, "patch")
 
-      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`])
+      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`, `--creds timoni:${token}`])
     }))
 
     return results.join("\n")

@@ -22,8 +22,9 @@ jobs:
 
     - name: Call dagger onPush
       run: |
-        cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
-        dagger call on-push --dir=.
+        echo 'json: ${{ steps.metadata.outputs.commit }}'
+      # cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+      # dagger call on-push --dir=. --commit-json=
       # uses: dagger/dagger-for-github@v5
       # with:
       #   version: "0.10.2"

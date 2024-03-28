@@ -14,40 +14,45 @@
  * if appropriate. All modules should have a short description.
  */
 
-import { dag, Container, Directory, object, func } from "@dagger.io/dagger"
+import { dag, Container, Directory, object, func, field } from "@dagger.io/dagger"
+import { v4 } from "uuid"
+import { maxSatisfying, inc } from "semver"
+import * as semver from "semver"
 
 @object()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class Timpkg {
-  /**
-   * Returns a container that echoes whatever string argument is provided
-   */
-  @func()
-  containerEcho(stringArg: string): Container {
-    return dag.container().from("alpine:latest").withExec(["echo", stringArg])
-  }
+  @field()
+  isDev = false
 
-  /**
-   * Returns lines that match a pattern in the files of the provided Directory
-   */
   @func()
-  async grepDir(directoryArg: Directory, pattern: string): Promise<string> {
-    return dag
-      .container()
-      .from("alpine:latest")
-      .withMountedDirectory("/mnt", directoryArg)
-      .withWorkdir("/mnt")
-      .withExec(["grep", "-R", pattern, "."])
-      .stdout()
+  withDev(isDev: boolean = true): Timpkg {
+    this.isDev = isDev
+    return this
   }
 
   @func()
-  async onPush(dir: Directory, tags: string): Promise<string> {
-    return tags
+  async onPush(dir: Directory): Promise<string> {
+    const modules = await dir.entries()
+
+    const results = await Promise.all(modules.map(async m => {
+      const tim = dag.timoni().withDir(dir)
+      const imageUrl = this.isDev
+        ? `oci://ttl.sh/${v4()}`
+        : `oci://ghcr.io/anthonybrice/modules/${m}`
+      const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
+      const vs =
+        (await tim.cli(["mod", "list", realModuleUrl, "--with-digest=false"]))
+          .split('\n')
+          .slice(1)
+          .map(x => semver.coerce(x))
+      const current = maxSatisfying(vs, '*')
+      const next = inc(current, "patch")
+
+      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`])
+    }))
+
+    return results.join("\n")
   }
 
-  @func()
-  async fml(): Promise<string> {
-    return "fml"
-  }
 }

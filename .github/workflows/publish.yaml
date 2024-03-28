@@ -24,6 +24,6 @@ jobs:
       uses: dagger/dagger-for-github@v5
       with:
         version: "0.10.2"
-        verb: run
-        # args: on-push --dir=. --commit-json='${{ steps.metadata.outputs.commit }}'
-        args: node dagger/src/index.ts
+        verb: call
+        args: on-push --dir=. --commit-json='${{ steps.metadata.outputs.commit }}'
+        # args: node dagger/src/index.ts

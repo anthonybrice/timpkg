@@ -25,5 +25,4 @@ jobs:
       with:
         version: "0.10.2"
         verb: call
-        module: ./dagger
         args: on-push --dir=. --commit-json='${{ steps.metadata.outputs.commit }}'

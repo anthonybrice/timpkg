@@ -14,7 +14,14 @@
  * if appropriate. All modules should have a short description.
  */
 
-import { dag, Container, Directory, object, func, field } from "@dagger.io/dagger"
+import {
+  dag,
+  Container,
+  Directory,
+  object,
+  func,
+  field,
+} from "@dagger.io/dagger"
 import { v4 } from "uuid"
 import { maxSatisfying, inc } from "semver"
 import * as semver from "semver"
@@ -35,24 +42,34 @@ class Timpkg {
   async onPush(dir: Directory, token?: string): Promise<string> {
     const modules = await dir.entries()
 
-    const results = await Promise.all(modules.map(async m => {
-      const tim = dag.timoni().withDir(dir)
-      const imageUrl = this.isDev
-        ? `oci://ttl.sh/${v4()}`
-        : `oci://ghcr.io/anthonybrice/modules/${m}`
-      const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
-      const vs =
-        (await tim.cli(["mod", "list", realModuleUrl, "--with-digest=false"]))
-          .split('\n')
+    const results = await Promise.all(
+      modules.map(async (m) => {
+        const tim = dag.timoni().withDir(dir)
+        const imageUrl = this.isDev
+          ? `oci://ttl.sh/${v4()}`
+          : `oci://ghcr.io/anthonybrice/modules/${m}`
+        const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
+        const vs = (
+          await tim.cli(["mod", "list", realModuleUrl, "--with-digest=false"])
+        )
+          .split("\n")
           .slice(1)
-          .map(x => semver.coerce(x))
-      const current = maxSatisfying(vs, '*')
-      const next = inc(current, "patch")
+          .map((x) => semver.coerce(x))
+        const current = maxSatisfying(vs, "*")
+        const next = inc(current, "patch")
 
-      return tim.cli(["mod", "push", `/tmp/timoni/${m}/`, imageUrl, `--version=${next}`, "--latest=true", ...(token ? [`--creds=timoni:${token}`]: [])])
-    }))
+        return tim.cli([
+          "mod",
+          "push",
+          `/tmp/timoni/${m}/`,
+          imageUrl,
+          `--version=${next}`,
+          "--latest=true",
+          ...(token ? [`--creds=timoni:${token}`] : []),
+        ])
+      }),
+    )
 
     return results.join("\n")
   }
-
 }

@@ -29,7 +29,6 @@ import * as semver from "semver"
 @object()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class Timpkg {
-  @field()
   isDev = false
 
   @func()

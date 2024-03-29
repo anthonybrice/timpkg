@@ -39,19 +39,19 @@ class Timpkg {
 
   @func()
   async onPush(dir: Directory, token?: string): Promise<string> {
+    const tim = dag
+      .container()
+      .from("golang:latest")
+      .withExec([
+        "go",
+        "install",
+        "github.com/stefanprodan/timoni/cmd/timoni@latest",
+      ])
+      .withDirectory("/tmp/timoni", dir)
     const modules = await dir.entries()
 
     const results = await Promise.all(
       modules.map(async (m) => {
-        const tim = dag
-          .container()
-          .from("golang:latest")
-          .withExec([
-            "go",
-            "install",
-            "github.com/stefanprodan/timoni/cmd/timoni@latest",
-          ])
-          .withDirectory("/tmp/timoni", dir)
         const imageUrl = this.isDev
           ? `oci://ttl.sh/${v4()}`
           : `oci://ghcr.io/anthonybrice/modules/${m}`

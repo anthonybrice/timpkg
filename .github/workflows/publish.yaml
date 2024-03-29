@@ -21,3 +21,4 @@ jobs:
         version: "0.10.2"
         verb: call
         args: on-push --dir=./modules --token=${{ secrets.GITHUB_TOKEN }}
+        cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

@@ -44,13 +44,29 @@ class Timpkg {
 
     const results = await Promise.all(
       modules.map(async (m) => {
-        const tim = dag.timoni().withDir(dir)
+        const tim = dag
+          .container()
+          .from("golang:latest")
+          .withExec([
+            "go",
+            "install",
+            "github.com/stefanprodan/timoni/cmd/timoni@latest",
+          ])
+          .withDirectory("/tmp/timoni", dir)
         const imageUrl = this.isDev
           ? `oci://ttl.sh/${v4()}`
           : `oci://ghcr.io/anthonybrice/modules/${m}`
         const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
         const vs = (
-          await tim.cli(["mod", "list", realModuleUrl, "--with-digest=false"])
+          await tim
+            .withExec([
+              "timoni",
+              "mod",
+              "list",
+              realModuleUrl,
+              "--with-digest=false",
+            ])
+            .stdout()
         )
           .split("\n")
           .slice(1)
@@ -58,15 +74,18 @@ class Timpkg {
         const current = maxSatisfying(vs, "*")
         const next = inc(current, "patch")
 
-        return tim.cli([
-          "mod",
-          "push",
-          `/tmp/timoni/${m}/`,
-          imageUrl,
-          `--version=${next}`,
-          "--latest=true",
-          ...(token ? [`--creds=timoni:${token}`] : []),
-        ])
+        return tim
+          .withExec([
+            "timoni",
+            "mod",
+            "push",
+            `/tmp/timoni/${m}/`,
+            imageUrl,
+            `--version=${next}`,
+            "--latest=true",
+            ...(token ? [`--creds=timoni:${token}`] : []),
+          ])
+          .stdout()
       }),
     )
 

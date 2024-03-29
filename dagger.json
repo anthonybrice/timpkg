@@ -1,12 +1,6 @@
 {
   "name": "timpkg",
   "sdk": "typescript",
-  "dependencies": [
-    {
-      "name": "timoni",
-      "source": "github.com/anthonybrice/daggerverse/timoni@091f845b145bc2a3c0d4bc910dddb721f6f9bb1f"
-    }
-  ],
   "source": "dagger",
   "engineVersion": "v0.10.2"
 }

@@ -39,15 +39,7 @@ class Timpkg {
 
   @func()
   async onPush(dir: Directory, token?: string): Promise<string> {
-    const tim = dag
-      .container()
-      .from("golang:latest")
-      .withExec([
-        "go",
-        "install",
-        "github.com/stefanprodan/timoni/cmd/timoni@latest",
-      ])
-      .withDirectory("/tmp/timoni", dir)
+    const tim = timoni().withDirectory("/tmp/timoni", dir)
     const modules = await dir.entries()
 
     const results = await Promise.all(
@@ -56,38 +48,49 @@ class Timpkg {
           ? `oci://ttl.sh/${v4()}`
           : `oci://ghcr.io/anthonybrice/modules/${m}`
         const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
-        const vs = (
-          await tim
-            .withExec([
-              "timoni",
-              "mod",
-              "list",
-              realModuleUrl,
-              "--with-digest=false",
-            ])
-            .stdout()
-        )
+        const vs = (await modList(tim, realModuleUrl))
           .split("\n")
           .slice(1)
           .map((x) => semver.coerce(x))
         const current = maxSatisfying(vs, "*")
         const next = inc(current, "patch")
 
-        return tim
-          .withExec([
-            "timoni",
-            "mod",
-            "push",
-            `/tmp/timoni/${m}/`,
-            imageUrl,
-            `--version=${next}`,
-            "--latest=true",
-            ...(token ? [`--creds=timoni:${token}`] : []),
-          ])
-          .stdout()
+        return modPush(tim, `/tmp/timoni/${m}/`, imageUrl, next, token)
       }),
     )
 
     return results.join("\n")
   }
+}
+
+function timoni() {
+  return dag
+    .container()
+    .from("golang:latest")
+    .withExec([
+      "go",
+      "install",
+      "github.com/stefanprodan/timoni/cmd/timoni@latest",
+    ])
+}
+
+function modList(ctr: Container, url: string) {
+  return ctr
+    .withExec(["timoni", "mod", "list", url, "--with-digest=false"])
+    .stdout()
+}
+
+function modPush(ctr: Container, path: string, url: string, version: string, token?: string) {
+  return ctr
+    .withExec([
+      "timoni",
+      "mod",
+      "push",
+      path,
+      url,
+      `--version=${version}`,
+      "--latest=true",
+      ...(token ? [`--creds=timoni:${token}`] : []),
+    ])
+    .stdout()
 }

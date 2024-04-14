@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+COPY root/ /
+
+RUN apk add --no-cache unzip \
+  && unzip -d /bin /tmp/rpk-linux-amd64.zip \
+  && apk del unzip \
+  && rm -f /tmp/rpk-linux-amd64.zip

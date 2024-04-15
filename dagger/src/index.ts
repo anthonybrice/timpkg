@@ -1,10 +1,4 @@
-import {
-  dag,
-  Container,
-  Directory,
-  object,
-  func,
-} from "@dagger.io/dagger"
+import { dag, Container, Directory, object, func } from "@dagger.io/dagger"
 import { v4 } from "uuid"
 import { maxSatisfying, inc } from "semver"
 import * as semver from "semver"
@@ -15,37 +9,46 @@ class Timpkg {
   isDev = false
 
   @func()
-  withDev(isDev: boolean = true): Timpkg {
-    this.isDev = isDev
+  withDev(): Timpkg {
+    this.isDev = true
     return this
   }
 
   /**
-   * Pushes all modules in the directory to the registry.
+   * Push all modules in the directory to the registry.
    */
   @func()
-  async onPush(dir: Directory, token?: string): Promise<string> {
-    const tim = timoni().withDirectory("/tmp/timoni", dir)
+  async pushDirs(dir: Directory, token?: string): Promise<string> {
     const modules = await dir.entries()
 
     const results = await Promise.all(
-      modules.map(async (m) => {
-        const imageUrl = this.isDev
-          ? `oci://ttl.sh/${v4()}`
-          : `oci://ghcr.io/anthonybrice/modules/${m}`
-        const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${m}`
-        const vs = (await modList(tim, realModuleUrl))
-          .split("\n")
-          .slice(1)
-          .map((x) => semver.coerce(x))
-        const current = maxSatisfying(vs, "*")
-        const next = inc(current, "patch")
-
-        return modPush(tim, `/tmp/timoni/${m}/`, imageUrl, next, token)
-      }),
+      modules.map(async (m) => this.pushDir(dir.directory(m), token)),
     )
 
     return results.join("\n")
+  }
+
+  /**
+   * Push module at directory to the registry.
+   */
+  @func()
+  async pushDir(dir: Directory, token?: string): Promise<string> {
+    const tim = timoni().withDirectory("/tmp/timoni", dir)
+    const moduleName = (await dir.file("cue.mod/module.cue").contents())
+      .split("/")
+      .slice(1)[0]
+      .replace(/[^a-z0-9]+$/i, "")
+
+    const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${moduleName}`
+    const imageUrl = this.isDev ? `oci://ttl.sh/${v4()}` : realModuleUrl
+    const versions = (await modList(tim, realModuleUrl))
+      .split("\n")
+      .slice(1)
+      .map((x) => semver.coerce(x))
+    const current = maxSatisfying(versions, "*")
+    const next = inc(current, "patch")
+
+    return modPush(tim, `/tmp/timoni/`, imageUrl, next, token)
   }
 }
 
@@ -66,7 +69,13 @@ function modList(ctr: Container, url: string) {
     .stdout()
 }
 
-function modPush(ctr: Container, path: string, url: string, version: string, token?: string) {
+function modPush(
+  ctr: Container,
+  path: string,
+  url: string,
+  version: string,
+  token?: string,
+) {
   return ctr
     .withExec([
       "timoni",

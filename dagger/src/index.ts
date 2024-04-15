@@ -22,7 +22,7 @@ class Timpkg {
     const modules = await dir.entries()
 
     const results = await Promise.all(
-      modules.map(async (m) => this.pushDir(dir.directory(m), token)),
+      modules.map((m) => this.pushDir(dir.directory(m), token)),
     )
 
     return results.join("\n")

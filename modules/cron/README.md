@@ -47,7 +47,7 @@ timeZone: string
 crontab: [...{
 	schedule!: string
 	command!:  [string, ...]
-	args?:		 [...string]
+	args?:     [...string]
 }]
 
 env: { [string]: string }

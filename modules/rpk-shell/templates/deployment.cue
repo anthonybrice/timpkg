@@ -26,34 +26,13 @@ import (
 						name:            #config.metadata.name
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
-						ports: [
-							{
-								name:          "http"
-								containerPort: 80
-								protocol:      "TCP"
-							},
-						]
-						readinessProbe: {
-							httpGet: {
-								path: "/"
-								port: "http"
-							}
-							initialDelaySeconds: 5
-							periodSeconds:       10
-						}
-						livenessProbe: {
-							tcpSocket: {
-								port: "http"
-							}
-							initialDelaySeconds: 5
-							periodSeconds:       5
-						}
 						if #config.resources != _|_ {
 							resources: #config.resources
 						}
 						if #config.securityContext != _|_ {
 							securityContext: #config.securityContext
 						}
+						command: #config.command
 					},
 				]
 				if #config.pod.affinity != _|_ {

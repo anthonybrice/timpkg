@@ -86,6 +86,8 @@ import (
 			add: *["CHOWN", "NET_BIND_SERVICE", "SETGID", "SETUID"] | [string]
 		}
 	}
+
+	command: *["/bin/sh", "-c", "tail -f /dev/null"] | [string]
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.

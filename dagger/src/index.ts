@@ -18,11 +18,11 @@ class Timpkg {
    * Publish all modules in the directory to the container registry.
    */
   @func()
-  async pushDirs(dir: Directory, token?: string): Promise<string> {
+  async pushDirs(dir: Directory, registryRoot: string = "ghcr.io/anthonybrice", token?: string): Promise<string> {
     const modules = await dir.entries()
 
     const results = await Promise.all(
-      modules.map((m) => this.pushDir(dir.directory(m), token)),
+      modules.map((m) => this.pushDir(dir.directory(m), registryRoot, token)),
     )
 
     return results.join("\n")
@@ -32,14 +32,14 @@ class Timpkg {
    * Publish module at directory to the container registry.
    */
   @func()
-  async pushDir(dir: Directory, token?: string): Promise<string> {
+  async pushDir(dir: Directory, registryRoot: string = "ghcr.io/anthonybrice", token?: string): Promise<string> {
     const tim = timoni().withDirectory("/tmp/timoni", dir)
     const moduleName = (await dir.file("cue.mod/module.cue").contents())
       .split("/")
       .slice(1)[0]
       .replace(/[^a-z0-9]+$/i, "")
 
-    const realModuleUrl = `oci://ghcr.io/anthonybrice/modules/${moduleName}`
+    const realModuleUrl = `oci://${registryRoot}/modules/${moduleName}`
     const imageUrl = this.isDev ? `oci://ttl.sh/${v4()}` : realModuleUrl
     const versions = (await modList(tim, realModuleUrl))
       .split("\n")

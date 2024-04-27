@@ -15,7 +15,7 @@ class Timpkg {
   }
 
   /**
-   * Push all modules in the directory to the registry.
+   * Publish all modules in the directory to the container registry.
    */
   @func()
   async pushDirs(dir: Directory, token?: string): Promise<string> {
@@ -29,7 +29,7 @@ class Timpkg {
   }
 
   /**
-   * Push module at directory to the registry.
+   * Publish module at directory to the container registry.
    */
   @func()
   async pushDir(dir: Directory, token?: string): Promise<string> {

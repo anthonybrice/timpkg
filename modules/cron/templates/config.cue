@@ -83,7 +83,7 @@ import (
 		}
 	}
 
-	timezone: *"Etc/UTC" | string
+	timeZone: *"Etc/UTC" | string
 
 	crontab: [...{
 		schedule!: string

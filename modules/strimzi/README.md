@@ -1,0 +1,40 @@
+# strimzi
+
+A [timoni.sh](http://timoni.sh) module for deploying strimzi to Kubernetes clusters.
+
+## Install
+
+To create an instance using the default values:
+
+```shell
+timoni -n default apply strimzi oci://ghcr.io/anthonybrice/modules/strimzi
+```
+
+To change the [default configuration](#configuration),
+create one or more `values.cue` files and apply them to the instance.
+
+For example, create a file `my-values.cue` with the following content:
+
+```cue
+values: {
+	resources: requests: {
+		cpu:    "100m"
+		memory: "128Mi"
+	}
+}
+```
+
+And apply the values with:
+
+```shell
+timoni -n default apply strimzi oci://<container-registry-url> \
+--values ./my-values.cue
+```
+
+## Uninstall
+
+To uninstall an instance and delete all its Kubernetes resources:
+
+```shell
+timoni -n default delete strimzi
+```

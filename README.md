@@ -8,4 +8,10 @@ A collection of [Timoni](https://github.com/stefanprodan/timoni) modules and bun
 
 ## 📼 Demo
 
+The CICD pipeline:
+
 ![Made with VHS](https://vhs.charm.sh/vhs-1kky5kNDoJXVZkW8B2M2eO.gif)
+
+Timoni as a templating engine:
+
+![Made with VHS](https://vhs.charm.sh/vhs-38hb59MkfSv90OqwIie6BS.gif)

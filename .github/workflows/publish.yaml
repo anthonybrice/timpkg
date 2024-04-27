@@ -18,7 +18,7 @@ jobs:
     - name: Call dagger on-push
       uses: dagger/dagger-for-github@v5
       with:
-        version: "0.10.2"
+        version: "0.11.1"
         verb: call
         args: push-dirs --dir=./modules --token=${{ secrets.GITHUB_TOKEN }}
         cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

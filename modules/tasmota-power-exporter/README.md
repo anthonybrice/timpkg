@@ -17,10 +17,12 @@ For example, create a file `my-values.cue` with the following content:
 
 ```cue
 values: {
-	resources: requests: {
-		cpu:    "100m"
-		memory: "128Mi"
-	}
+	env: [
+		{
+			name: "DEVICE_IP"
+			value: "192.168.68.113"
+		},
+	]
 }
 ```
 

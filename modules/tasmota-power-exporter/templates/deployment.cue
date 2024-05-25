@@ -7,7 +7,6 @@ import (
 
 #Deployment: appsv1.#Deployment & {
 	#config:    #Config
-	#cmName:    string
 	apiVersion: "apps/v1"
 	kind:       "Deployment"
 	metadata:   #config.metadata

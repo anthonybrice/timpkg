@@ -41,7 +41,7 @@ import (
 	// The default image repository and tag is set in `values.cue`.
 	image: timoniv1.#Image & {
 		repository: *"ghcr.io/astr0n8t/tasmota-power-exporter" | string
-		tag: *"latest" | string
+		tag: *"" | string
 		digest: * "sha256:9158a5d8fc177dc9ff3db8bc568e2bb3b478f2b2733db7d0852826e2747448db" | string
 	}
 

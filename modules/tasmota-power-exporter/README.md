@@ -1,6 +1,6 @@
 # tasmota-power-exporter
 
-A [timoni.sh](http://timoni.sh) module for deploying [Tasmota Power Exporter](https://github.com/astr0n8t/tasmota-power-exporter) and a configured [ServiceMonitor]([https://docs.openshift.com/container-platform/4.12/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.ServiceMonitor)) to Kubernetes clusters.
+A [timoni.sh](http://timoni.sh) module for deploying [Tasmota Power Exporter](https://github.com/astr0n8t/tasmota-power-exporter) and a configured [ServiceMonitor](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.ServiceMonitor) to Kubernetes clusters.
 
 ## Install
 

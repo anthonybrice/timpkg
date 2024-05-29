@@ -68,8 +68,7 @@ timoni -n default delete tasmota-power-exporter
 | `podSecurityContext:`        | `corev1.#PodSecurityContext`            | `{}`                                      | [Kubernetes pod security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context)                                 |
 | `securityContext:`           | `corev1.#SecurityContext`               | `{}`                                      | [Kubernetes container security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context)                           |
 | `service: annotations:`      | `{[ string]: string}`                   | `{}`                                      | Annotations applied to the Kubernetes Service                                                                                                |
-| `service: port:`             | `int`                                   | `80`                                      | Kubernetes Service HTTP port                                                                                                                 |
-| `test: enabled:`             | `bool`                                  | `false`                                   | Run end-to-end tests at install and upgrades                                                                                                 |
+| `service: port:`             | `int`                                   | `8000`                                      | Kubernetes Service HTTP port                                                                                                                 |
 
 #### Recommended values
 

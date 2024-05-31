@@ -38,7 +38,6 @@ import (
 
 	// The image allows setting the container image repository,
 	// tag, digest and pull policy.
-	// The default image repository and tag is set in `values.cue`.
 	image: timoniv1.#Image & {
 		repository: *"ghcr.io/astr0n8t/tasmota-power-exporter" | string
 		tag: *"" | string

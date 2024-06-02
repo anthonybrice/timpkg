@@ -9,13 +9,13 @@ import (
 	apiVersion: "monitoring.coreos.com/v1"
 	kind:       "ServiceMonitor"
 	metadata:   #config.metadata
-	spec:  {
+	spec: {
 		selector: matchLabels: "app.kubernetes.io/name": #config.metadata.name
 		namespaceSelector: matchNames: [#config.metadata.namespace]
 		endpoints: [
 			{
-				port: "http"
-				path: "/metrics"
+				port:     "http"
+				path:     "/metrics"
 				interval: "1s"
 			},
 		]

@@ -40,8 +40,8 @@ import (
 	// tag, digest and pull policy.
 	image: timoniv1.#Image & {
 		repository: *"ghcr.io/astr0n8t/tasmota-power-exporter" | string
-		tag: *"" | string
-		digest: * "sha256:9158a5d8fc177dc9ff3db8bc568e2bb3b478f2b2733db7d0852826e2747448db" | string
+		tag:        *"" | string
+		digest:     *"sha256:9158a5d8fc177dc9ff3db8bc568e2bb3b478f2b2733db7d0852826e2747448db" | string
 	}
 
 	// The resources allows setting the container resource requirements.
@@ -79,7 +79,7 @@ import (
 
 	env!: [...corev1.#EnvVar] & [
 		{
-			name: "DEVICE_IP"
+			name:  "DEVICE_IP"
 			value: string
 		},
 	]

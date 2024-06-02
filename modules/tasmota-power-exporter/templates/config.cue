@@ -41,7 +41,7 @@ import (
 	image: timoniv1.#Image & {
 		repository: *"ghcr.io/astr0n8t/tasmota-power-exporter" | string
 		tag:        *"" | string
-		digest:     *"sha256:9158a5d8fc177dc9ff3db8bc568e2bb3b478f2b2733db7d0852826e2747448db" | string
+		digest:     *"sha256:22cf7a21cca6e1a304287bccac08223a7b81f51e8b27c0867746952118ea9804" | string
 	}
 
 	// The resources allows setting the container resource requirements.

@@ -9,7 +9,7 @@ package main
 values: {
 	env: [
 		{
-			name: "DEVICE_IP"
+			name:  "DEVICE_IP"
 			value: "192.168.68.112"
 		},
 	]

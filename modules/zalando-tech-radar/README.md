@@ -57,7 +57,7 @@ timoni -n default delete zalando-tech-radar
 
 | Key          | Type  | Default | Description                                                                                                                                                                          |
 |--------------|-------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ztrConfig:` | `...` | `{}`    | [The`config.json` file that `index.html` fetches.](https://github.com/zalando/tech-radar/blob/master/docs/config.json) See values.cue for an example. See config.cue for the schema. |
+| `ztrConfig:` | `...` | `{}`    | [The object passed to `radar_visualization()` in their README.](https://github.com/zalando/tech-radar) See values.cue for an example. See config.cue for the schema. |
 
 ### General values
 

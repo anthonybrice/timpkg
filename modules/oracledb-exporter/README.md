@@ -1,4 +1,4 @@
-# tasmota-power-exporter
+# oracledb-exporter
 
 A [timoni.sh](http://timoni.sh) module for deploying [Oracle DB Exporter](https://github.com/iamseth/oracledb_exporter) and a configured [ServiceMonitor](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.ServiceMonitor) to Kubernetes clusters.
 

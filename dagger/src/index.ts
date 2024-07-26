@@ -35,6 +35,7 @@ class Timpkg {
   async pushDir(dir: Directory, registryRoot: string = "ghcr.io/anthonybrice", token?: string): Promise<string> {
     const tim = timoni().withDirectory("/tmp/timoni", dir)
     const moduleName = (await dir.file("cue.mod/module.cue").contents())
+      .split("\n")[0]
       .split("/")
       .slice(1)[0]
       .replace(/[^a-z0-9]+$/i, "")

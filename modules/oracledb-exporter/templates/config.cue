@@ -79,11 +79,14 @@ import (
 	}
 
 	env!: [...corev1.#EnvVar] & [
-		{
+		corev1.#EnvVar & {
 			// An Oracle Database connection string for the Go lang driver. https://github.com/iamseth/oracledb_exporter?tab=readme-ov-file#running
 			name: "DATA_SOURCE_NAME"
-		} & corev1.#EnvVar
+		}
 	]
+
+	// Service Monitor optional settings.
+	endpoints?: smv1.#ServiceMonitorSpec.endpoints
 
 	// Pod optional settings.
 	podAnnotations?: {[string]: string}
@@ -92,9 +95,6 @@ import (
 	tolerations?: [...corev1.#Toleration]
 	affinity?: corev1.#Affinity
 	topologySpreadConstraints?: [...corev1.#TopologySpreadConstraint]
-
-	// Service Monitor optional settings.
-	endpoints?: smv1.#ServiceMonitorSpec.endpoints
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.

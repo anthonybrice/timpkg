@@ -12,12 +12,18 @@ import (
 	spec: {
 		selector: matchLabels: "app.kubernetes.io/name": #config.metadata.name
 		namespaceSelector: matchNames: [#config.metadata.namespace]
-		endpoints: [
-			{
-				port:     "http"
-				path:     "/metrics"
-				interval: "1s"
-			},
-		]
+		if #config.endpoints == _|_ {
+			endpoints: [
+				{
+					port:     "http"
+					path:     "/metrics"
+					interval: "1m"
+					scrapeTimeout: "30s"
+				},
+			]
+		}
+		if #config.endpoints != _|_ {
+			endpoints: #config.endpoints
+		}
 	}
 }

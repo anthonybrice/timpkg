@@ -3,6 +3,7 @@ package templates
 import (
 	corev1 "k8s.io/api/core/v1"
 	timoniv1 "timoni.sh/core/v1alpha1"
+	smv1 "monitoring.coreos.com/servicemonitor/v1"
 )
 
 // Config defines the schema and defaults for the Instance values.
@@ -80,9 +81,8 @@ import (
 	env!: [...corev1.#EnvVar] & [
 		{
 			// An Oracle Database connection string for the Go lang driver. https://github.com/iamseth/oracledb_exporter?tab=readme-ov-file#running
-			name:  "DATA_SOURCE_NAME"
-			value: string
-		},
+			name: "DATA_SOURCE_NAME"
+		} & corev1.#EnvVar
 	]
 
 	// Pod optional settings.
@@ -92,6 +92,9 @@ import (
 	tolerations?: [...corev1.#Toleration]
 	affinity?: corev1.#Affinity
 	topologySpreadConstraints?: [...corev1.#TopologySpreadConstraint]
+
+	// Service Monitor optional settings.
+	endpoints?: smv1.#ServiceMonitorSpec.endpoints
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.

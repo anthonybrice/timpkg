@@ -5,12 +5,6 @@
 
 package main
 
-// Defaults
+// Placeholder for user-supplied values.
 values: {
-	env: [
-		{
-			name:  "DEVICE_IP"
-			value: "192.168.68.118"
-		},
-	]
 }

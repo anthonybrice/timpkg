@@ -133,8 +133,8 @@ import (
 
 	objects: {
 		deploy: #Deployment & {
-			#config: config
-			#bindConfig: bindConfig.metadata.name
+			#config:      config
+			#bindConfig:  bindConfig.metadata.name
 			#zonesConfig: zonesConfig.metadata.name
 		}
 		service: #Service & {#config: config}

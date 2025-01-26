@@ -6,12 +6,12 @@ import (
 )
 
 #Deployment: appsv1.#Deployment & {
-	#config:    #Config
-	#bindConfig: string
+	#config:      #Config
+	#bindConfig:  string
 	#zonesConfig: string
-	apiVersion: "apps/v1"
-	kind:       "Deployment"
-	metadata:   #config.metadata
+	apiVersion:   "apps/v1"
+	kind:         "Deployment"
+	metadata:     #config.metadata
 	spec: appsv1.#DeploymentSpec & {
 		replicas: #config.replicas
 		selector: matchLabels: #config.selector.labels
@@ -28,7 +28,6 @@ import (
 						name:            #config.metadata.name
 						image:           #config.image.reference
 						imagePullPolicy: #config.image.pullPolicy
-						// command: ["sleep", "infinity"]
 						ports: [
 							{
 								name:          "http-udp"
@@ -58,9 +57,9 @@ import (
 								mountPath: "/var/cache/bind"
 							},
 							{
-								name: "zones"
+								name:      "zones"
 								mountPath: "/var/lib/bind"
-							}
+							},
 						]
 						if #config.resources != _|_ {
 							resources: #config.resources
@@ -82,7 +81,7 @@ import (
 					{
 						name: "zones"
 						configMap: name: #zonesConfig
-					}
+					},
 				]
 				if #config.pod.affinity != _|_ {
 					affinity: #config.pod.affinity

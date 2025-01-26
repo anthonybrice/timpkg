@@ -46,7 +46,7 @@ timoni -n default delete bind9
 | Key          | Type                 | Default | Description                                                                                                |
 | ------------ | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
 | `namedConf:` | `string`             | `""`    | [The named configuration file](https://bind9.readthedocs.io/en/v9.20.4/chapter3.html#named-conf-base-file) |
-| `zones:`     | `{[string]: string}` | `{}`    | [The zone configuration files](https://bind9.readthedocs.io/en/v9.20.4/chapter3.html#named-conf-base-file) |
+| `zones:`     | `{[string]: string}` | `{}`    | [The zone configuration files](https://bind9.readthedocs.io/en/v9.20.4/chapter3.html#example-com-base-zone-file) |
 
 ### General Configuration
 

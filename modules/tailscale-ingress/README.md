@@ -40,12 +40,12 @@ timoni -n default delete tailscale-ingress
 
 ## Configuration
 
-| Key                      | Type                 | Default        | Description                            |
-| ------------------------ | -------------------- | -------------- | -------------------------------------- |
-| `metadata: labels:`      | `{[string]: string}` | `{}`           | Common labels for all resources        |
-| `metadata: annotations:` | `{[string]: string}` | `{}`           | Common annotations for all resources   |
-| `serviceName:`           | `string`             | `""`           | Backend Kubernetes Service             |
-| `servicePort:`           | `ServiceBackendPort` | `{number: 80}` | Port of the referenced service         |
-| `host:`                  | `string`             | `""`           | Desired hostname of the Tailscale node |
+| Key                      | Type                 | Default | Description                            |
+| ------------------------ | -------------------- | ------- | -------------------------------------- |
+| `metadata: labels:`      | `{[string]: string}` | `{}`    | Common labels for all resources        |
+| `metadata: annotations:` | `{[string]: string}` | `{}`    | Common annotations for all resources   |
+| `serviceName:`           | `string`             | `""`    | Backend Kubernetes Service             |
+| `servicePort:`           | `ServiceBackendPort` | `{}`    | Port of the referenced service         |
+| `host:`                  | `string`             | `""`    | Desired hostname of the Tailscale node |
 
-By default, the Ingress exposes the beackend service to your tailnet only. [To expose the service to the public internet](https://tailscale.com/kb/1439/kubernetes-operator-cluster-ingress#exposing-a-service-to-the-public-internet-using-ingress-and-tailscale-funnel), add the `tailscale.com/funnel: "true"` annotation.
+By default, the Ingress exposes the backend service to your tailnet only. [To expose the service to the public internet](https://tailscale.com/kb/1439/kubernetes-operator-cluster-ingress#exposing-a-service-to-the-public-internet-using-ingress-and-tailscale-funnel), add the `tailscale.com/funnel: "true"` annotation.

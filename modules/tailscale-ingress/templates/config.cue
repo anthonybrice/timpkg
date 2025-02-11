@@ -35,9 +35,7 @@ import (
 	serviceName: *"" | string
 
 	// The servicePort is the port of the service that the ingress will route to.
-	servicePort: networkingv1.#ServiceBackendPort | *{
-		number: 80
-	}
+	servicePort: *{} | networkingv1.#ServiceBackendPort
 
 	// The host is the subdomain on your tailnet from which the ingress will allow traffic.
 	host: *"" | string
